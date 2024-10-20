@@ -1,0 +1,114 @@
+
+/* 确保页面占满全屏 */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 使 #content 水平居中，但位于页面上方 */
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 上方对齐 */
+}
+
+/* 布局容器，水平排列 */
+#search-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;  /* 水平居中布局 */
+    align-items: flex-start;  /* 垂直顶端对齐 */
+    gap: 20px;  /* 两个区域之间的间距 */
+}
+
+/* 基准测试结果容器的样式 */
+#benchmark-results-container {
+    width: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    text-align: left;
+    max-height: 400px;  /* 可选：限制容器的最大高度 */
+    overflow-y: auto;   /* 可选：允许内容滚动 */
+}
+
+/* 搜索框和按钮区域 */
+#search-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 垂直居中对齐 */
+}
+
+/* 设置搜索框的大小 */
+#searchbox {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* 设置搜索按钮的样式 */
+#searchbutton,
+#index-selection button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+
+#index-selection {
+    display: flex;
+    flex-direction: horizontal;
+    align-items: center;
+    gap: 30px;
+}
+
+/* 使 #responsesize 内容居中 */
+#responsesize {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#urllist {
+    color: #969696;
+    border-radius: 3px;
+    margin-top: 20px;
+    text-align: center;  /* 水平居中内容 */
+    display: flex;
+    justify-content: center; /* 水平居中对齐 */
+}
+
+/* 确保每个列表项的内容左对齐 */
+#urllist ul {
+    list-style-position: inside; /* 圆点在文本内 */
+    padding-left: 0; /* 去除默认缩进 */
+    width: 100%;
+    max-width: 500px; /* 限制 ul 的最大宽度，保持居中 */
+    margin: 0 auto; /* 居中对齐 */
+}
+
+#urllist li {
+    display: block; /* 让列表项成为块元素 */
+    text-align: left; /* 列表项内部的内容左对齐 */
+    margin-bottom: 5px; /* 列表项之间添加间距 */
+    width: 100%; /* 确保列表项宽度与父元素一致，左对齐 */
+    max-width: 500px; /* 限制结果项的最大宽度 */
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin: 10px;
+    border: solid 1px #dcdcdc;
+    border-radius: 4px;
+    min-width: 200px;
+    transition: box-shadow 0.3s, border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="text"].focus {
+    border: solid 1px #707070;
+    box-shadow: 0 0 5px 1px #969696;
+}

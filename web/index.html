@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Search Engine with different index</title>
+    <script src="/code.js" defer></script>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+    <div id="content">
+        <div id="search-layout">
+        
+    
+            <!-- 搜索框和按钮 -->
+            <div id="search-controls">
+                <h1>My Search Engine</h1>
+                <input id="searchbox" type="text" placeholder="Search here..." />
+                <button id="searchbutton">Search</button>  
+                <div id="index-selection">
+                    <button id="use-forward-index">Try Forward Index</button>
+                    <button id="use-inverted-index">Try Inverted Index</button>
+                </div>
+                    <!-- 基准测试结果显示容器 -->
+            <div id="benchmark-results-container"></div>
+                <div id="responsesize"></div>
+                <div id="urllist"></div>
+            </div>
+        </div>
+    </div>
+      
+    
+</body>
+
+</html>
