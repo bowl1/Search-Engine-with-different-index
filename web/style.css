@@ -4,7 +4,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif; /* 使用现代字体 */
 }
 
 /* 使 #content 水平居中，但位于页面上方 */
@@ -34,6 +34,30 @@ html, body {
     overflow-y: auto;   /* 可选：允许内容滚动 */
 }
 
+/* 标题容器样式 */
+#logo {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 字母样式 */
+#logo .letter {
+    margin: 0 2px; /* 字母之间的间距 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* 星星样式 */
+#logo .star {
+    font-size: 3.5rem; /* 星星大小，可根据需要调整 */
+    margin: 0 10px; /* 星星和文字的间距 */
+    color: gold; /* 为星星设置颜色，浏览器对 Emoji 支持不同，建议保留原色 */
+}
+
 /* 搜索框和按钮区域 */
 #search-controls {
     display: flex;
@@ -47,6 +71,10 @@ html, body {
     font-size: 16px;
     margin-bottom: 10px;
     width: 100%;
+    border: solid 1px #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, border 0.3s;
 }
 
 /* 设置搜索按钮的样式 */
@@ -56,7 +84,19 @@ html, body {
     font-size: 16px;
     cursor: pointer;
     margin-bottom: 10px;
-    border-radius: 20px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #6a89cc, #4a69bd);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+#searchbutton:hover,
+#index-selection button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 #index-selection {
