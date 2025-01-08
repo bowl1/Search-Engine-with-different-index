@@ -2,6 +2,7 @@
 
 data/
 config.txt
+*.db
 
 # Created by https://www.gitignore.io/api/tex,vim,java,latex,gradle,eclipse,java-web,code-java,sublimetext,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=tex,vim,java,latex,gradle,eclipse,java-web,code-java,sublimetext,visualstudiocode
