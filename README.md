@@ -15,11 +15,11 @@ Next to the webpage links, a score is displayed. This score is calculated using 
 - Additionally, this webpage offers two different search methods: forward index and inverted index. You can choose between these methods, and the webpage will display their performance on datasets of different sizes. Performance is measured using a benchmark that evaluates the average execution time of the indexing method. The lower the score, the faster the speed.
 
 - The following are detailed screenshots:
-<p align="center">
-    <img src="Images/demo-gif.gif" alt="Search Engine Screenshot" width="500">
-    <img src="Images/demo1.png" alt="Search Engine Screenshot" width="400">
-    <img src="Images/demo2.png" alt="Search Engine Screenshot" width="400">
-    <img src="Images/demo3.png" alt="Search Engine Screenshot" width="400">
-    <img src="Images/demo4.png" alt="Search Engine Screenshot" width="400">
-    <img src="Images/demo5.png" alt="Search Engine Screenshot" width="400">
+<p align = "center">
+    <img src="Images/demo-gif.gif" alt="Search Engine Screenshot" width="800"> <br/>
+    <img src="Images/demo1.png" alt="Search Engine Screenshot" width="400"> <br/>
+    <img src="Images/demo2.png" alt="Search Engine Screenshot" width="400"> <br/>
+    <img src="Images/demo3.png" alt="Search Engine Screenshot" width="400"> <br/>
+    <img src="Images/demo5.png" alt="Search Engine Screenshot" width="400"> <br/>
+    <img src="Images/demo4.png" alt="Search Engine Screenshot" width="400"> 
 </p>
