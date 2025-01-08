@@ -1,9 +1,9 @@
-ForwardIndex                                  (filename)  Mode  Cnt   Score   Error  Units
-IndexBenchmarking.measureAvgTime    data/enwiki-tiny.txt  avgt    2  ≈ 10⁻⁵           s/op
-IndexBenchmarking.measureAvgTime   data/enwiki-small.txt  avgt    2   0.014           s/op
-IndexBenchmarking.measureAvgTime  data/enwiki-medium.txt  avgt    2   9.540           s/op
+ForwardIndex                      (filename)              Mode   Cnt   Score     Units
+IndexBenchmarking.measureAvgTime    data/enwiki-tiny.txt  avgt    2   ≈ 10⁻⁵     s/op
+IndexBenchmarking.measureAvgTime   data/enwiki-small.txt  avgt    2   0.014      s/op
+IndexBenchmarking.measureAvgTime  data/enwiki-medium.txt  avgt    2   9.540      s/op
 ===SECTION===
-InvertedIndex                                     (filename)  Mode  Cnt   Score   Error  Units
-IndexBenchmarking.measureAvgTime    data/enwiki-tiny.txt  avgt    2  ≈ 10⁻⁶           s/op
-IndexBenchmarking.measureAvgTime   data/enwiki-small.txt  avgt    2  ≈ 10⁻⁵           s/op
-IndexBenchmarking.measureAvgTime  data/enwiki-medium.txt  avgt    2  ≈ 10⁻³           s/op
+InvertedIndex                     (filename)                Mode   Cnt   Score   Units
+IndexBenchmarking.measureAvgTime    data/enwiki-tiny.txt    avgt    2    ≈ 10⁻⁶  s/op
+IndexBenchmarking.measureAvgTime   data/enwiki-small.txt    avgt    2    ≈ 10⁻⁵  s/op
+IndexBenchmarking.measureAvgTime  data/enwiki-medium.txt    avgt    2    ≈ 10⁻³  s/op 

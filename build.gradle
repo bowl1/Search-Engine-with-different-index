@@ -29,7 +29,7 @@ repositories {
     //jcenter()
     mavenCentral()
     gradlePluginPortal() 
-     maven { url "https://jitpack.io" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -38,6 +38,8 @@ dependencies {
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
   
 }
 
@@ -90,4 +92,5 @@ task jmhQuick(dependsOn: [buildConf, jmhJar], type: JavaExec) {
 run {
     dependsOn buildConf
     mainClassName = 'searchengine.Main'
+    //mainClassName = 'tools.DataMigration'
 }

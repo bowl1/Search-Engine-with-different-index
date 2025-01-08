@@ -1,75 +1,56 @@
 package searchengine;
-
-import java.io.IOException;
-import java.net.BindException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.SECONDS)
-@Warmup(iterations = 1)  // 预热1次
-@Measurement(iterations = 2)  // 正式测量2次
-@Fork(value = 1)  // 只启动一次新的JVM
-
+@BenchmarkMode(Mode.AverageTime) // 测试平均时间
+@OutputTimeUnit(TimeUnit.MILLISECONDS) // 输出时间单位为毫秒
+@Warmup(iterations = 1) // 预热1次
+@Measurement(iterations = 3) // 正式测量3次
+@Fork(value = 1) // 启动一个JVM实例
 public class IndexBenchmarking {
-    WebSearchServer server;
-    List<String> hitSearchTerms;
-    List<String> missSearchTerms;
-    // QUERY WORDS
-    ArrayList<String> queryWords = new ArrayList<>();
 
-    @Param({ "data/enwiki-tiny.txt", "data/enwiki-small.txt", "data/enwiki-medium.txt" })
-    String filename;
+    private WebSearchServer server;
+    private List<String> queryWords;
 
     @Setup(Level.Trial)
-    public void setup() {
-        queryWords.add("denmark");
-        queryWords.add("computer");
-        queryWords.add("china");
-        queryWords.add("pakistan");
-        queryWords.add("italy");
-        queryWords.add("poland");
-    
-        try {
-            var rnd = new Random();
-            while (server == null) {
-                try {
-                    server = new WebSearchServer(rnd.nextInt(60000) + 1024, filename);
-                } catch (BindException e) {
-                    // port in use. Try again
+    public void setup() throws Exception {
+        // 初始化查询词
+        queryWords = List.of("denmark", "computer", "china", "pakistan", "italy", "poland");
+
+        // 初始化 WebSearchServer（直接使用数据库连接）
+        initializeServer();
+    }
+
+    private void initializeServer() throws Exception {
+        var rnd = new Random();
+        int maxAttempts = 10; // 限制端口尝试次数
+        int attempts = 0;
+
+        while (server == null && attempts < maxAttempts) {
+            try {
+                int port = rnd.nextInt(60000) + 1024;
+                server = new WebSearchServer(port);
+            } catch (Exception e) {
+                attempts++;
+                if (attempts >= maxAttempts) {
+                    throw new RuntimeException("Failed to start server after multiple attempts.", e);
                 }
             }
-        } catch (IOException e) {
-
-            e.printStackTrace();
         }
     }
 
     @Benchmark
-    public void measureAvgTime() throws InterruptedException {
+    public void measureSearchIndexPerformance() {
+        int limit = 30; // 每页 30 个结果
+        int offset = 0; // 从第一页开始
 
         for (String word : queryWords) {
-
-            server.getSearchIndex().search(word);
-
+            // 测试每个查询词的搜索性能（带分页参数）
+            server.getSearchIndex().search(word, limit, offset);
         }
-
     }
-
 }

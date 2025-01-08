@@ -152,3 +152,32 @@ input[type="text"].focus {
     border: solid 1px #707070;
     box-shadow: 0 0 5px 1px #969696;
 }
+
+#pagination {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-info {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .pagination-buttons button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .pagination-buttons button.active {
+    font-weight: bold;
+    background-color: #4285F4;
+    color: white;
+    cursor: default;
+  }
+  
+  .pagination-buttons button:hover:not(.active) {
+    background-color: #ddd;
+  }

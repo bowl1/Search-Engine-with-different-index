@@ -1,71 +1,80 @@
 package searchengine;
+import java.util.*;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 
-/**
- * QueryHandler class handles both AND and OR logic in queries.
- */
 public class QueryHandler {
-    public static final String KEYWORD_OR = "\\s+(?i)or\\s+";  // 匹配 "or" (不区分大小写)
-    public static final String KEYWORD_SPACE = " ";  // 空格匹配 AND
+    public static final String KEYWORD_OR = "\\s+(?i)or\\s+"; // 匹配 "or" (不区分大小写)
+    public static final String KEYWORD_SPACE = " "; // 空格匹配 AND
 
     /**
-     * Processes the query to handle both OR and AND logic.
+     * Handles both OR and AND logic with pagination.
      *
-     * @param query The query string which may contain AND (space) or OR keywords.
+     * @param query       The query string containing AND (space) or OR keywords.
      * @param searchIndex The search index for searching webpages.
-     * @return A list of webpages that match the query.
+     * @param limit       Maximum number of results per page.
+     * @param offset      Offset for the current page.
+     * @return A list of webpages matching the query.
      */
-    public static List<Webpage> getMatchingWebsites(String query, SearchIndex searchIndex) {
-        // 拆分 OR 子组
-        String[] searchTermGroups = query.split(KEYWORD_OR);
-        Set<Webpage> combinedSetOfWebsites = new HashSet<>();
+    public static Map<String, Object> getMatchingWebsitesWithPagination(
+        String query, SearchIndex searchIndex, int limit, int offset) {
 
-        // 处理每个 OR 子组
-        for (String searchTerms : searchTermGroups) {
-            Set<Webpage> result = getMatchingWebsitesPerSearchTerms(searchTerms.trim(), searchIndex);
-            combinedSetOfWebsites.addAll(result);
-        }
+    // 拆分 OR 子组
+    String[] searchTermGroups = query.split(KEYWORD_OR);
+    Set<Webpage> combinedResults = new HashSet<>();
 
-        return new ArrayList<>(combinedSetOfWebsites);
+    // 处理每个 OR 子组
+    for (String searchTerms : searchTermGroups) {
+        Set<Webpage> result = processAndLogic(searchTerms.trim(), searchIndex);
+        combinedResults.addAll(result); // 合并 OR 的结果
     }
 
+    // 转换为列表并排序
+    List<Webpage> allResults = new ArrayList<>(combinedResults);
+    allResults.sort((page1, page2) -> Double.compare(page2.getScore(), page1.getScore())); // 按分数降序排序
+
+    // 分页
+    int totalResults = allResults.size(); // 总结果数
+    int fromIndex = Math.min(offset, totalResults);
+    int toIndex = Math.min(offset + limit, totalResults);
+    List<Webpage> paginatedResults = allResults.subList(fromIndex, toIndex);
+
+    // 返回分页结果和总数
+    Map<String, Object> response = new HashMap<>();
+    response.put("totalResults", totalResults); // 总数
+    response.put("paginatedResults", paginatedResults); // 当前页的结果
+
+    return response;
+}
+
     /**
-     * Processes each AND sub-query group to find common webpages that match all terms.
+     * Processes AND logic: all terms must match.
      *
-     * @param searchTerms The sub-query group with AND logic (terms separated by spaces).
+     * @param searchTerms The terms with AND logic (space-separated).
      * @param searchIndex The search index for searching webpages.
-     * @return A set of webpages that match all the terms in the sub-query.
+     * @return A set of webpages that match all terms.
      */
-    private static Set<Webpage> getMatchingWebsitesPerSearchTerms(String searchTerms, SearchIndex searchIndex) {
+    private static Set<Webpage> processAndLogic(String searchTerms, SearchIndex searchIndex) {
         String[] listOfSearchTerm = searchTerms.split(KEYWORD_SPACE);
 
-        Set<Webpage> webpagesContainingSearchTerms = null;
-        boolean firstResult = true;
+        Set<Webpage> webpagesContainingSearchTerms = new HashSet<>();
 
-        // 处理每个 AND 逻辑的单词
-        for (String searchTerm : listOfSearchTerm) {
-            // 使用 SearchIndex 的 searchDocuments 方法来搜索网页
-            Set<Webpage> webpageSet = searchIndex.searchDocuments(searchTerm);
+        for (int i = 0; i < listOfSearchTerm.length; i++) {
+            String searchTerm = listOfSearchTerm[i];
+            Set<Webpage> currentTermResults = searchIndex.searchDocuments(searchTerm, Integer.MAX_VALUE, 0);
+            System.out.println("Search term: " + searchTerm + ", Results: " + currentTermResults.size());
 
-            // 如果没有结果，返回空集
-            if (webpageSet.isEmpty()) {
-                return new HashSet<>();
-            }
-
-            // 初始化或执行交集操作
-            if (firstResult) {
-                webpagesContainingSearchTerms = webpageSet;
+            if (i == 0) {
+                webpagesContainingSearchTerms.addAll(currentTermResults); // Initialize with first term
             } else {
-                webpagesContainingSearchTerms.retainAll(webpageSet);
+                webpagesContainingSearchTerms.retainAll(currentTermResults); // Intersect results
             }
 
-            firstResult = false;
+            // If intersection is empty, no need to proceed further
+            if (webpagesContainingSearchTerms.isEmpty()) {
+                break;
+            }
         }
 
-        return webpagesContainingSearchTerms != null ? webpagesContainingSearchTerms : new HashSet<>();
+        return webpagesContainingSearchTerms;
     }
 }
